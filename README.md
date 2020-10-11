@@ -1,8 +1,6 @@
-# L.TileLayer.PouchDBCached
+# L.TileLayer.PouchDBCached for nuxt.js
 
-Allows all Leaflet TileLayers to cache into PouchDB for offline use, in a transparent fashion.
-
-There is a [demo](https://nikolauskrismer.github.io/Leaflet.TileLayer.PouchDBCached/demo.html) available, which shows cache hits/misses in the browser's developer console.
+Allows all Leaflet TileLayers to cache into PouchDB in nuxt project for offline use, in a transparent fashion.
 
 ## Dependencies
 
@@ -12,10 +10,10 @@ However, this has been fixed in leaflet 1.3.4, so everything works fine from ver
 
 You probably want to load Leaflet, PouchDB and Leaflet.TileLayer.PouchDB like so:
 
-```html
-<script src="https://unpkg.com/leaflet@1.3.4/dist/leaflet-src.js"></script>
-<script src="https://unpkg.com/pouchdb@7.0.0/dist/pouchdb.js"></script>
-<script src="https://unpkg.com/leaflet.tilelayer.pouchdbcached@latest/L.TileLayer.PouchDBCached.js"></script>
+```
+npm install --save nuxt-leaflet
+npm install --save pouchdb
+npm install --save nuxt-leaflet-pouchdb
 ```
 
 If you are still using Leaflet 0.7.x, the latest compatible release is [v0.1.0](https://github.com/MazeMap/Leaflet.TileLayer.PouchDBCached/releases/tag/v0.1.0).
@@ -28,11 +26,33 @@ The plugin modifies the core `L.TileLayer` class, so it should be possible to ca
 To use, add the option `useCache` with a value of `true` when instantiating your layer. You probably want to use Leaflet's `crossOrigin` option, like so:
 
 ```javascript
-const layer = L.tileLayer('https://whatever/{z}/{x}/{y}.png', {
-	maxZoom: 18,
-	useCache: true,
-	crossOrigin: true
-});
+<template>
+  ...
+        <l-tile-layer
+          :url="url"
+          :attribution="attribution"
+          :options="options"
+        />
+  ...
+</template>
+<script>
+import L from 'leaflet'
+import { LMap, LTileLayer, LPopup, LMarker } from 'vue2-leaflet'
+import '@/helpers/filters'
+import 'nuxt-leaflet-pouchdb'
+
+export default {
+...
+  data() {
+    return {
+      options: {
+        useCache: true,
+        crossOrigin: true
+      }
+    }
+  },
+...
+}
 ```
 
 Options available are as follows:
