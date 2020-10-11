@@ -1,4 +1,4 @@
-
+const PouchDB = require('pouchdb').default;
 
 L.TileLayer.addInitHook(function() {
 
